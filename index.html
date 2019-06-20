@@ -19,7 +19,7 @@
         td.x {
             background-color: blueviolet;
         }
-        td.o {
+        td.d {
             background-color: green;
         }
     </style>
@@ -30,13 +30,13 @@
         $(document).ready(function() {
             //possible answers
             const arr = [];
-            arr.push("X", "O", "x", "o");
+            arr.push("X", "D", "x", "d");
 
-            let firstUser = prompt("First player is X/O?", "X");
+            let firstUser = prompt("First player is X/D?", "X");
 
             while (!arr.includes(firstUser)) {
-                alert("Not ok answer");
-                firstUser = prompt("First player is X/O?", "X");
+                alert("X/D!!!");
+                firstUser = prompt("First player is X/D?", "X");
             }
             
             $("td").click(function() {
@@ -52,10 +52,10 @@
                     var currText = this.innerHTML;
                     if (currText === '') {
                         if (player === 0) {
-                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "X" : "O";
+                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "X" : "D”;
                             this.className = this.innerHTML.toLowerCase();
                         } else {
-                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "O" : "X";
+                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "D" : "X";
                             this.className = this.innerHTML.toLowerCase();
                         }
                     player = 1 - player;
@@ -71,7 +71,7 @@
                 $("td").each(function(i, val) {
                     if (val.innerHTML === "X") {
                         xs.push(i);
-                    } else if (val.innerHTML === "O") {
+                    } else if (val.innerHTML === "D") {
                         os.push(i);
                     }
                 });
@@ -98,7 +98,7 @@
                     })
 
                     if (sum === 3) {
-                        alert("Player with O won!!! Congratulations.");
+                        alert("Player with D won!!! Congratulations.");
                         won = 1;
                     }
                 })
