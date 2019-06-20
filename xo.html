@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>XO</title>   
+    <style>
+        table {
+            text-align: center;
+            width: 600px;
+            height: 600px;
+            margin: auto;  
+            font-size: 100px; 
+        }
+        td {
+            border: 3px solid black;
+            width: 170px;
+            height: 170px;
+        }
+        td.x {
+            background-color: blueviolet;
+        }
+        td.o {
+            background-color: green;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        var player = 0;
+        var won = 0;
+        $(document).ready(function() {
+            //possible answers
+            const arr = [];
+            arr.push("X", "O", "x", "o");
+
+            let firstUser = prompt("First player is X/O?", "X");
+
+            while (!arr.includes(firstUser)) {
+                alert("Not ok answer");
+                firstUser = prompt("First player is X/O?", "X");
+            }
+            
+            $("td").click(function() {
+                if (won == 1) {
+                    if (confirm("Play again?")) {
+                        $("td").each((val, i) => {
+                            i.innerHTML = '';
+                            i.className = '';
+                        });
+                        won = 0;
+                    }
+                } else {
+                    var currText = this.innerHTML;
+                    if (currText === '') {
+                        if (player === 0) {
+                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "X" : "O";
+                            this.className = this.innerHTML.toLowerCase();
+                        } else {
+                            this.innerHTML = firstUser.toUpperCase().charCodeAt(0) - "X".charCodeAt(0) === 0 ? "O" : "X";
+                            this.className = this.innerHTML.toLowerCase();
+                        }
+                    player = 1 - player;
+                    checkWin();
+                    }
+                }
+            })
+            
+            function checkWin() {
+                let xs = [];
+                let os = [];
+
+                $("td").each(function(i, val) {
+                    if (val.innerHTML === "X") {
+                        xs.push(i);
+                    } else if (val.innerHTML === "O") {
+                        os.push(i);
+                    }
+                });
+                
+                let situations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2]];
+                situations.forEach((val) => {
+                    let sum = 0;
+                    val.forEach((val, i) => {
+                        if (xs.includes(val)) {
+                            sum += 1;
+                        }
+                    })
+
+                    if (sum === 3) {
+                        alert("Player with X won!!! Congratulations.");
+                        won = 1;
+                    }
+                    
+                    sum = 0;
+                    val.forEach((val) => {
+                        if (os.includes(val)) {
+                            sum += 1;
+                        }
+                    })
+
+                    if (sum === 3) {
+                        alert("Player with O won!!! Congratulations.");
+                        won = 1;
+                    }
+                })
+
+            }
+
+
+        })
+    </script>
+  </head>
+  <body>
+  <table border="30px">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+  </table>
+  </body>
+</html>
